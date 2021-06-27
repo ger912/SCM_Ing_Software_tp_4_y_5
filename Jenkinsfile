@@ -2,31 +2,32 @@ pipeline {
   agent any
   stages {
     stage('Build') {
+      tools {
+        jdk 'JDK11'
+      }
       steps {
-        sh '''sh \'java --version\' &&
-git(url: \'https://github.com/ger912/SCM_Ing_Software_tp_4_y_5\', branch: \'master\', credentialsId: \'ger912\')
-&& sh \'chmod +x gradlew && ./gradlew init && ./gradlew clean spotlessApply && ./gradlew build\'
-'''
+        sh 'java --version'
+        git(url: 'https://github.com/ger912/SCM-TP4-IngSoftware.git', branch: 'master', credentialsId: 'ger912')
+        sh 'chmod +x gradlew && ./gradlew init && ./gradlew clean spotlessApply && ./gradlew build'
       }
     }
 
     stage('Test') {
       steps {
-        echo 'test'
+        echo 'Test'
       }
     }
 
     stage('Validate') {
       steps {
-        echo 'validate'
+        echo 'Validate'
       }
     }
 
     stage('Deploy') {
       steps {
-        echo 'deploy'
+        echo 'Deploy'
       }
     }
-
   }
 }
