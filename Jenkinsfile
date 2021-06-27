@@ -3,9 +3,9 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh '''sh \'java --version\'
+        sh '''sh \'java --version\' &&
 git(url: \'https://github.com/ger912/SCM_Ing_Software_tp_4_y_5\', branch: \'master\', credentialsId: \'ger912\')
-sh \'chmod +x gradlew && ./gradlew init && ./gradlew clean spotlessApply && ./gradlew build\'
+&& sh \'chmod +x gradlew && ./gradlew init && ./gradlew clean spotlessApply && ./gradlew build\'
 '''
       }
     }
