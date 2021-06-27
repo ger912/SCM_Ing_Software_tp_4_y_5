@@ -7,7 +7,7 @@ pipeline {
       }
       steps {
         sh 'java --version'
-        git(url: 'https://github.com/ger912/SCM_Ing_Software_tp_4_y_5/', branch: 'master', credentialsId: 'ger912')
+        git(url: 'https://github.com/ger912/SCM_Ing_Software_tp_4_y_5/', branch: 'master')
         sh 'chmod +x gradlew && ./gradlew init && ./gradlew clean spotlessApply && ./gradlew build'
       }
     }
