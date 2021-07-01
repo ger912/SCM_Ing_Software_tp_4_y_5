@@ -56,8 +56,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testCompileOnly 'junit:junit:4.13'
     testRuntimeOnly 'org.junit.vintage:junit-vintage-engine'
-    classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3"
-}
+   }
 
 test {
     useJUnitPlatform()
