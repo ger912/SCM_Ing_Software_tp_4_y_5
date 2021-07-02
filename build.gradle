@@ -82,3 +82,8 @@ eclipse {
         javaRuntimeName = "JavaSE-11"
     }
 }
+tasks {
+    test {
+        useJUnitPlatform()
+    }
+}
