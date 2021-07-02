@@ -1,8 +1,8 @@
 package sample.web;
 
-import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
-import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
-import org.springframework.boot.web.servlet.ErrorPage;
+import org.springframework.boot.context.embedded.ConfigurableServletContainer;
+import org.springframework.boot.context.embedded.ServletContainerCustomizer;
+//import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -22,15 +22,15 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
   }
 
   @Bean
-  public EmbeddedServletContainerCustomizer containerCustomizer() {
+  public ServletContainerCustomizer containerCustomizer() {
     return new ServletContainerCustomizer();
   }
 
-  protected static class ServletContainerCustomizer implements EmbeddedServletContainerCustomizer {
+  protected static class ServletContainerCustomizer implements ServletContainerCustomizer {
 
     @Override
-    public void customize(ConfigurableEmbeddedServletContainer factory) {
-      factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/404"));
+    public void customize(ConfigurableServletContainer factory) {
+      //factory.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/404"));
     }
   }
 }
