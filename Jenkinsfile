@@ -18,6 +18,7 @@ pipeline {
       }
       steps {
         echo 'Analyze'
+        jacoco(runAlways: true)
       }
     }
 
