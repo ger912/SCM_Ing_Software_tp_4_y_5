@@ -47,6 +47,14 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
+	
+	testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.6.2")
+    testImplementation("org.mockito:mockito-junit-jupiter:3.3.3")
+
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testCompileOnly("junit:junit:4.13")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine")
 }
 
 eclipse {
