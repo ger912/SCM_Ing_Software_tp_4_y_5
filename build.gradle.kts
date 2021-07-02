@@ -8,7 +8,6 @@ plugins {
 }
 
 apply(plugin = "io.spring.dependency-management")
-apply(plugin: "org.sonarqube")
 
 spotless {
     java {
@@ -29,7 +28,6 @@ repositories {
     mavenCentral()
     mavenLocal()
     maven(url = "https://repo.spring.io/milestone")
-	maven(url "https://plugins.gradle.org/m2/")
 }
 
 dependencies {
