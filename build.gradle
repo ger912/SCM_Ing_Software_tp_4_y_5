@@ -4,6 +4,7 @@ plugins {
     id "com.diffplug.gradle.spotless" version "4.0.1"
     id "org.springframework.boot" version "2.5.2"
     id "org.seasar.doma.compile" version "1.0.0"
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
 version = "2.36.0-beta-1"
@@ -35,9 +36,9 @@ repositories {
 
 dependencies {
     annotationProcessor("org.seasar.doma:doma-processor:${dependentVersion}")
-    implementation 'org.springframework.boot:spring-boot-starter-validation:2.3.0.RC1'
-    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-    implementation("org.springframework.boot:spring-boot-starter-web")
+    //implementation 'org.springframework.boot:spring-boot-starter-validation:2.3.0.RC1'
+    //implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    //implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.seasar.doma:doma-core:${dependentVersion}")
@@ -45,6 +46,9 @@ dependencies {
     implementation("com.h2database:h2")
     implementation("org.webjars:jquery:2.1.1")
     compileOnly("org.springframework.boot:spring-boot-devtools")
+    
+    implementation 'org.springframework.boot:spring-boot-starter'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
     
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.3.0.RC1'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
@@ -54,7 +58,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testCompileOnly 'junit:junit:4.13'
     testRuntimeOnly 'org.junit.vintage:junit-vintage-engine'
-    classpath "org.springframework.boot:spring-boot-gradle-plugin:2.5.2"
+    
 }
 apply plugin: 'org.springframework.boot'
 
