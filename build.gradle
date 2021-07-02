@@ -1,15 +1,12 @@
 plugins {
-    id "java"
-    id "com.diffplug.eclipse.apt" version '3.22.0'
-    id "com.diffplug.gradle.spotless" version "4.0.1"
-    id "org.springframework.boot" version "2.5.2"
-    id "org.seasar.doma.compile" version "1.0.0"
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id("java")
+    id("com.diffplug.eclipse.apt") version "3.30.0"
+    id("com.diffplug.spotless") version "5.14.0"
+    id("org.springframework.boot") version "2.5.2"
+    id("org.seasar.doma.compile") version "1.1.0"
 }
 
-version = "2.36.0-beta-1"
-def dependentVersion = version
-def domaSpringBootVersion = "1.4.0"
+apply(plugin = "io.spring.dependency-management")
 
 spotless {
     java {
@@ -23,32 +20,30 @@ java {
 }
 
 springBoot {
-    mainClass = "sample.Application"
+    mainClass.set("sample.Application")
 }
 
 repositories {
     mavenCentral()
     mavenLocal()
-    maven { url "https://repo.spring.io/milestone" }
-    maven { url "https://plugins.gradle.org/m2/" }
-    
+    maven(url = "https://repo.spring.io/milestone")
 }
 
 dependencies {
-    annotationProcessor("org.seasar.doma:doma-processor:${dependentVersion}")
-    implementation 'org.springframework.boot:spring-boot-starter-validation:2.3.0.RC1'
+    val domaVersion: String by project
+    val domaSpringBootVersion: String by project
+    annotationProcessor("org.seasar.doma:doma-processor:${domaVersion}")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.seasar.doma:doma-core:${dependentVersion}")
+    implementation("org.seasar.doma:doma-core:${domaVersion}")
     implementation("org.seasar.doma.boot:doma-spring-boot-starter:${domaSpringBootVersion}")
-    implementation("com.h2database:h2")
-    implementation("org.webjars:jquery:2.1.1")
+    implementation("com.h2database:h2:1.4.200")
+    implementation("org.webjars:jquery:3.6.0")
+    implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.5.3")
     compileOnly("org.springframework.boot:spring-boot-devtools")
-    
-    implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
     
     testImplementation 'org.springframework.boot:spring-boot-starter-test:2.3.0.RC1'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
@@ -58,9 +53,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testCompileOnly 'junit:junit:4.13'
     testRuntimeOnly 'org.junit.vintage:junit-vintage-engine'
-    
 }
-apply plugin: 'org.springframework.boot'
 
 test {
     useJUnitPlatform()
@@ -70,17 +63,22 @@ test {
 eclipse {
     classpath {
         file {
-            whenMerged { classpath ->
-                classpath.entries.removeAll { it.path == '.apt_generated' }
+            whenMerged {
+                val classpath = this as org.gradle.plugins.ide.eclipse.model.Classpath
+                classpath.entries.removeAll {
+                    when (it) {
+                        is org.gradle.plugins.ide.eclipse.model.Output -> it.path == ".apt_generated"
+                        else -> false
+                    }
+                }
             }
-            withXml { provider ->
-                def node = provider.asNode()
-                // specify output path for .apt_generated
-                node.appendNode( 'classpathentry', [ kind: 'src', output: 'bin/main', path: '.apt_generated'])
+            withXml {
+                val node = asNode()
+                node.appendNode("classpathentry", mapOf("kind" to "src", "output" to "bin/main", "path" to ".apt_generated"))
             }
         }
     }
     jdt {
-        javaRuntimeName = 'JavaSE-11'
+        javaRuntimeName = "JavaSE-11"
     }
 }
