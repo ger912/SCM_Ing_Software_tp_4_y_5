@@ -13,6 +13,9 @@ pipeline {
     }
 
     stage('Analyze') {
+       tools {
+        jdk 'JDK11'
+      }
       steps {
         sh '''./gradlew sonarqube \\
   -Dsonar.projectKey=grupo:undefined \\
