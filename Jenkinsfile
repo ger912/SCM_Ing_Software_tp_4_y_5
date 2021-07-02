@@ -18,13 +18,7 @@ pipeline {
       }
       steps {
       withSonarQubeEnv() { 
-      sh './gradlew sonarqube \\
-  -Dsonar.projectKey=grupo:undefined \\
-  -Dsonar.host.url=http://localhost:9000 \\
-  -Dsonar.login=5a3973d4209ed74647fcd13c032315edfbe2a54d'
-    }
-    }
-
+      sh './gradlew sonarqube -Dsonar.projectKey=grupo:undefined -Dsonar.host.url=http://localhost:9000 -Dsonar.login=5a3973d4209ed74647fcd13c032315edfbe2a54d'}}
     stage('Validate') {
       steps {
         echo 'Validate'
