@@ -86,10 +86,8 @@ tasks {
     test {
         useJUnitPlatform()
     }
-	jacocoTestReport {
-    dependsOn test // tests are required to run before generating the report
-	}
 }
+
 
 
 
