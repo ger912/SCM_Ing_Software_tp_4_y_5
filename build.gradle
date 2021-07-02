@@ -10,7 +10,7 @@ apply(plugin = "io.spring.dependency-management")
 
 spotless {
     java {
-        googleJavaFormat('1.7')
+        googleJavaFormat("1.7")
     }
 }
 
@@ -33,19 +33,22 @@ dependencies {
     val domaVersion: String by project
     val domaSpringBootVersion: String by project
     annotationProcessor("org.seasar.doma:doma-processor:${domaVersion}")
-    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.seasar.doma:doma-core:${domaVersion}")
     implementation("org.seasar.doma.boot:doma-spring-boot-starter:${domaSpringBootVersion}")
     implementation("com.h2database:h2:1.4.200")
     implementation("org.webjars:jquery:3.6.0")
     implementation("nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:2.5.3")
-    compileOnly("org.springframework.boot:spring-boot-devtools")
-    
-    testImplementation 'org.springframework.boot:spring-boot-starter-test:2.3.0.RC1'
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+    }
+	
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.6.2'
     testImplementation 'org.mockito:mockito-junit-jupiter:3.3.3'
 
@@ -55,30 +58,29 @@ dependencies {
     testRuntimeOnly 'org.junit.vintage:junit-vintage-engine'
 }
 
-apply plugin: 'org.springframework.boot'
-
-test {
-    useJUnitPlatform()
-}
-
-
 eclipse {
     classpath {
         file {
-            whenMerged { classpath ->
-                classpath.entries.removeAll { it.path == '.apt_generated' }
+            whenMerged {
+                val classpath = this as org.gradle.plugins.ide.eclipse.model.Classpath
+                classpath.entries.removeAll {
+                    when (it) {
+                        is org.gradle.plugins.ide.eclipse.model.Output -> it.path == ".apt_generated"
+                        else -> false
+                    }
+                }
             }
-            withXml { provider ->
-                def node = provider.asNode()
-                // specify output path for .apt_generated
-                node.appendNode( 'classpathentry', [ kind: 'src', output: 'bin/main', path: '.apt_generated'])
+            withXml {
+                val node = asNode()
+                node.appendNode("classpathentry", mapOf("kind" to "src", "output" to "bin/main", "path" to ".apt_generated"))
             }
         }
     }
     jdt {
-        javaRuntimeName = 'JavaSE-11'
+        javaRuntimeName = "JavaSE-11"
     }
 }
+
 tasks {
     test {
         useJUnitPlatform()
