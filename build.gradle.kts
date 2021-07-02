@@ -8,6 +8,7 @@ plugins {
 }
 
 apply(plugin = "io.spring.dependency-management")
+apply plugin: "org.sonarqube"
 
 spotless {
     java {
