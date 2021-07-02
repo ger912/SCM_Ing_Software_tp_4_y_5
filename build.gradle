@@ -2,7 +2,7 @@ plugins {
     id "java"
     id "com.diffplug.eclipse.apt" version '3.22.0'
     id "com.diffplug.gradle.spotless" version "4.0.1"
-    id "org.springframework.boot" version "1.5.22"
+    id "org.springframework.boot" version "2.5.2"
     id "org.seasar.doma.compile" version "1.0.0"
 }
 
@@ -29,6 +29,8 @@ repositories {
     mavenCentral()
     mavenLocal()
     maven { url "https://repo.spring.io/milestone" }
+    maven { url "https://plugins.gradle.org/m2/" }
+    
 }
 
 dependencies {
@@ -52,7 +54,9 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
     testCompileOnly 'junit:junit:4.13'
     testRuntimeOnly 'org.junit.vintage:junit-vintage-engine'
+    classpath "org.springframework.boot:spring-boot-gradle-plugin:2.5.2"
 }
+apply plugin: 'org.springframework.boot'
 
 test {
     useJUnitPlatform()
