@@ -63,23 +63,18 @@ test {
 eclipse {
     classpath {
         file {
-            whenMerged {
-                val classpath = this as org.gradle.plugins.ide.eclipse.model.Classpath
-                classpath.entries.removeAll {
-                    when (it) {
-                        is org.gradle.plugins.ide.eclipse.model.Output -> it.path == ".apt_generated"
-                        else -> false
-                    }
-                }
+            whenMerged { classpath ->
+                classpath.entries.removeAll { it.path == '.apt_generated' }
             }
-            withXml {
-                val node = asNode()
-                node.appendNode("classpathentry", mapOf("kind" to "src", "output" to "bin/main", "path" to ".apt_generated"))
+            withXml { provider ->
+                def node = provider.asNode()
+                // specify output path for .apt_generated
+                node.appendNode( 'classpathentry', [ kind: 'src', output: 'bin/main', path: '.apt_generated'])
             }
         }
     }
     jdt {
-        javaRuntimeName = "JavaSE-11"
+        javaRuntimeName = 'JavaSE-11'
     }
 }
 tasks {
