@@ -5,6 +5,7 @@ plugins {
     id("org.springframework.boot") version "2.5.2"
     id("org.seasar.doma.compile") version "1.1.0"
     id("org.sonarqube") version "3.2.0"
+	id("jacoco")
 }
 
 apply(plugin = "io.spring.dependency-management")
@@ -86,3 +87,11 @@ tasks {
         useJUnitPlatform()
     }
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+    }
+}
+
+check.dependsOn jacocoTestReport
