@@ -23,6 +23,7 @@ pipeline {
   -Dsonar.host.url=http://localhost:9000 \\
   -Dsonar.login=5a3973d4209ed74647fcd13c032315edfbe2a54d\'
     }'''
+        withSonarQubeEnv(installationName: 'grupo:undefined', credentialsId: '5a3973d4209ed74647fcd13c032315edfbe2a54d')
       }
     }
 
