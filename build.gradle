@@ -36,9 +36,9 @@ repositories {
 
 dependencies {
     annotationProcessor("org.seasar.doma:doma-processor:${dependentVersion}")
-    //implementation 'org.springframework.boot:spring-boot-starter-validation:2.3.0.RC1'
-    //implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
-    //implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation 'org.springframework.boot:spring-boot-starter-validation:2.3.0.RC1'
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.seasar.doma:doma-core:${dependentVersion}")
